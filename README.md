@@ -212,33 +212,8 @@ The Cross-Origin Resource Sharing is configurable via application.yml or applica
 YAML Code
 ````
 cm:
-    allowed-path:
-    - /oauth/**
-    - /actuator/**
-    - /test/**
     enable-cors: true
-    allow-credentials: false
-    allowed-origins:
-    - '*' # Allow from every origin
-#   - http://localhost:3000
-#   - http://localhost:3001
-    allowed-methods:
-    - POST
-    - GET
-    - PUT
-    - DELETE
-    - PATCH
-    - OPTIONS
-    allowed-headers:
-    - Authorization
-    - Accept
-    - X-Context-Token
-    - Content-Type
-    - Access-Control-Request-Method
-    - Access-Control-Request-Headers
-    exposed-headers:
-    - Access-Control-Allow-Origin
-    - Access-Control-Allow-Credentials
+   
 
 ````
 Properties Code
@@ -246,39 +221,13 @@ Properties Code
 # ===============================
 # CM Security / CORS Configuration
 # ===============================
-
-cm.allowed-path[0]=/oauth/**
-cm.allowed-path[1]=/actuator/**
-cm.allowed-path[2]=/test/**
-
 cm.enable-cors=true
-cm.allow-credentials=false
 
-cm.allowed-origins[0]=*
-
-# cm.allowed-origins[1]=http://localhost:3000
-# cm.allowed-origins[2]=http://localhost:3001
-
-cm.allowed-methods[0]=POST
-cm.allowed-methods[1]=GET
-cm.allowed-methods[2]=PUT
-cm.allowed-methods[3]=DELETE
-cm.allowed-methods[4]=PATCH
-cm.allowed-methods[5]=OPTIONS
-
-cm.allowed-headers[0]=Authorization
-cm.allowed-headers[1]=Accept
-cm.allowed-headers[2]=X-Context-Token
-cm.allowed-headers[3]=Content-Type
-cm.allowed-headers[4]=Access-Control-Request-Method
-cm.allowed-headers[5]=Access-Control-Request-Headers
-
-cm.exposed-headers[0]=Access-Control-Allow-Origin
-cm.exposed-headers[1]=Access-Control-Allow-Credentials
 `````
 🗄️ SETUP DATABASE
 ------------------------------------------------
-Set up a database using the following script in your preferred database system. The following script is for a PostgreSQL DB. 
+The library itself will create relevant tables and rows once you set the database credentials in the application.yml/properties file. 
+If the library didnt create tables automatically set up a database using the following script in your preferred database system. The following script is for a PostgreSQL DB. 
 
 SUBSCRIPTION-STATUS
 `````
@@ -516,7 +465,27 @@ CREATE TABLE IF NOT EXISTS public.credentials
 
 );
 
+
+
 INSERT INTO public.credentials(cred_name, cred_value,  entered_by)
 	VALUES ('aes-key', '6674fe3c340b10c3af52410670a1973e','system');	
 
 `````
+
+🏗️ BUILD & RUN
+---------------
+Open ypur project path and run the following command
+
+`````
+mvn clean install
+`````
+Once you buld your jar, run the jar file using following command
+`````
+java -jar <your-artifact-id>.jar
+`````
+
+🌐 RUNNING THE BASIC APIs
+---------------
+Open ypur project path and run the following command
+
+
