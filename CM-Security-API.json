@@ -1,1 +1,237 @@
-
+{
+	"info": {
+		"_postman_id": "79877d98-efba-498b-add0-4e7fe6ac172b",
+		"name": "CM-SECURITY",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32124446",
+		"_collection_link": "https://lunar-star-160348.postman.co/workspace/NEW-WORKSPACE~564ee107-5f81-4dcf-b2d0-5804f100e4e7/collection/32124446-79877d98-efba-498b-add0-4e7fe6ac172b?action=share&source=collection_link&creator=32124446"
+	},
+	"item": [
+		{
+			"name": "1. LOGIN",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonResponse = pm.response.json();\r",
+							"const data = jsonResponse.responseBody;\r",
+							"if(data.accessToken){\r",
+							"    pm.collectionVariables.set(\"access-token\", data.accessToken);\r",
+							"    pm.collectionVariables.set(\"refresh-token\", data.refreshToken);\r",
+							"    console.log(data.accessToken);\r",
+							"    console.log(data.refreshToken);\r",
+							"}else{\r",
+							"    // Stop the run.\r",
+							"    postman.setNextRequest(null);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "requestId",
+						"value": "{{$randomUUID}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\":\"password\",\r\n    \"tenant\":1,\r\n    \"grantType\":\"user\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-url}}/oauth/login",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"oauth",
+						"login"
+					]
+				},
+				"description": "**Login API**\n\nThis will generate Access Token and Refresh Token"
+			},
+			"response": []
+		},
+		{
+			"name": "2. REFRESH TOKEN",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonResponse = pm.response.json();\r",
+							"const data = jsonResponse.responseBody;\r",
+							"if(data.accessToken){\r",
+							"    pm.collectionVariables.set(\"access-token\", data.accessToken);\r",
+							"    pm.collectionVariables.set(\"refresh-token\", data.refreshToken);\r",
+							"    console.log(data.accessToken);\r",
+							"    console.log(data.refreshToken);\r",
+							"}else{\r",
+							"    // Stop the run.\r",
+							"    postman.setNextRequest(null);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "requestId",
+						"value": "{{$randomUUID}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\":\"{{refresh-token}}\",\r\n    \"grantType\":\"user\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-url}}/oauth/refresh",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"oauth",
+						"refresh"
+					]
+				},
+				"description": "**Refresh API**\n\nThis will generate Access Token and Refresh Token once an access token got expires"
+			},
+			"response": []
+		},
+		{
+			"name": "3. LOGOUT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "requestId",
+						"value": "{{$randomUUID}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-url}}/oauth/logout",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"oauth",
+						"logout"
+					]
+				},
+				"description": "**Logout API**\n\nThis will clear Access Token and Refresh Token"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base-url",
+			"value": "http://localhost:8080/"
+		},
+		{
+			"key": "access-token",
+			"value": ""
+		},
+		{
+			"key": "context-token",
+			"value": ""
+		},
+		{
+			"key": "referesh-token",
+			"value": ""
+		},
+		{
+			"key": "refresh-token",
+			"value": ""
+		}
+	]
+}
