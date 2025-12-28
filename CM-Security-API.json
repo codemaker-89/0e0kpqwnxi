@@ -226,10 +226,6 @@
 			"value": ""
 		},
 		{
-			"key": "referesh-token",
-			"value": ""
-		},
-		{
 			"key": "refresh-token",
 			"value": ""
 		}
