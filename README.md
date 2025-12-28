@@ -486,6 +486,8 @@ java -jar <your-artifact-id>.jar
 
 🌐 RUNNING THE BASIC APIs
 ---------------
-Open ypur project path and run the following command
+Download this Postman collection and test your API
+
+https://github.com/codemaker-89/0e0kpqwnxi/blob/main/CM-Security-API.json
 
 
